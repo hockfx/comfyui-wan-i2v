@@ -74,9 +74,9 @@ RUN wget --progress=dot:giga \
     -O /ComfyUI/models/vae/wan_2.1_vae.safetensors \
     "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors"
 
-# ── Limpieza de caches pip y apt ──────────────────────────────────────────────
-RUN pip cache purge \
- && rm -rf /root/.cache /tmp/*
+# ── Limpieza de caches ────────────────────────────────────────────────────────
+# pip cache ya está deshabilitado por PIP_NO_CACHE_DIR=1, solo limpiamos restos
+RUN rm -rf /root/.cache /tmp/*
 
 # ── Handler y archivos de runtime ─────────────────────────────────────────────
 WORKDIR /
