@@ -1,0 +1,52 @@
+name: Build and Push ComfyUI Wan I2V Image
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Libera espacio en el runner — el build descarga ~13 GB de modelos
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          df -h
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Extract short SHA
+        id: sha
+        run: echo "SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_OUTPUT
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          # Sin cache — los modelos se descargan durante build; cache de layers es
+          # contraproducente aquí porque la capa de descarga siempre cambia si
+          # el modelo fuente cambia.
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/comfyui-wan-i2v:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/comfyui-wan-i2v:${{ steps.sha.outputs.SHORT_SHA }}
+          # Plataforma x86_64 requerida por RunPod
+          platforms: linux/amd64
