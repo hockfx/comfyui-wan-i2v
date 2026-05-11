@@ -11,6 +11,9 @@ RUN comfy node install comfyui-gguf
 # ComfyUI-VideoHelperSuite — VHS_VideoCombine → genera MP4
 RUN comfy node install comfyui-videohelpersuite
 
+# ComfyUI-WanVideoWrapper — nodos WanImageToVideo y VAEDecodeVideo
+RUN comfy node install comfyui-wanvideowrapper
+
 # ── Modelos Wan 2.1 I2V ───────────────────────────────────────────────────────
 # Wan2.1 I2V 480p GGUF Q4_K_S — 10.4 GB
 RUN comfy model download \
