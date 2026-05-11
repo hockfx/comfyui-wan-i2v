@@ -6,7 +6,7 @@ FROM runpod/worker-comfyui:5.8.5-base
 
 # Actualizar ComfyUI a la versión más reciente
 # WanImageToVideo y VAEDecodeVideo son nodos nativos en versiones recientes
-RUN cd /comfyui && git pull origin master
+RUN cd /comfyui && git fetch origin master && git reset --hard origin/master
 
 # ── Custom nodes ──────────────────────────────────────────────────────────────
 # ComfyUI-GGUF — loader para modelos .gguf (UnetLoaderGGUF)
