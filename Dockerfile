@@ -6,8 +6,6 @@ FROM runpod/worker-comfyui:5.8.5-base
 
 # Actualizar ComfyUI a la versión más reciente
 # WanImageToVideo y VAEDecodeVideo son nodos nativos en versiones recientes
-RUN cd /comfyui && git fetch origin master && git reset --hard origin/master && \
-    pip install -r requirements.txt --quiet
 
 # ── Custom nodes ──────────────────────────────────────────────────────────────
 # ComfyUI-GGUF — loader para modelos .gguf (UnetLoaderGGUF)
@@ -15,6 +13,11 @@ RUN comfy node install comfyui-gguf
 
 # ComfyUI-VideoHelperSuite — VHS_VideoCombine → genera MP4
 RUN comfy node install comfyui-videohelpersuite
+
+# ComfyUI-WanVideoWrapper (Kijai) — WanImageToVideo + VAEDecodeVideo
+RUN git clone --depth=1 https://github.com/kijai/ComfyUI-WanVideoWrapper.git \
+    /comfyui/custom_nodes/ComfyUI-WanVideoWrapper && \
+    pip install -r /comfyui/custom_nodes/ComfyUI-WanVideoWrapper/requirements.txt --quiet
 
 # ── Modelos Wan 2.1 I2V ───────────────────────────────────────────────────────
 # Wan2.1 I2V 480p GGUF Q4_K_S — 10.4 GB
