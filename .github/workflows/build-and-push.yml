@@ -24,10 +24,10 @@ jobs:
           df -h
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.10.0
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.4.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -37,16 +37,12 @@ jobs:
         run: echo "SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6.16.0
         with:
           context: .
           file: ./Dockerfile
           push: true
-          # Sin cache — los modelos se descargan durante build; cache de layers es
-          # contraproducente aquí porque la capa de descarga siempre cambia si
-          # el modelo fuente cambia.
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/comfyui-wan-i2v:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/comfyui-wan-i2v:${{ steps.sha.outputs.SHORT_SHA }}
-          # Plataforma x86_64 requerida por RunPod
           platforms: linux/amd64
