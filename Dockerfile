@@ -23,11 +23,11 @@ RUN comfy model download \
     --relative-path models/unet \
     --filename wan2.1-i2v-14b-480p-Q3_K_S.gguf
 
-# T5 text encoder — 1.2 GB
+# T5 text encoder fp16 — compatible con LoadWanVideoT5TextEncoder
 RUN comfy model download \
-    --url "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" \
+    --url "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors" \
     --relative-path models/text_encoders \
-    --filename umt5_xxl_fp8_e4m3fn_scaled.safetensors
+    --filename umt5_xxl_fp16.safetensors
 
 # CLIP Vision — 0.6 GB
 RUN comfy model download \
