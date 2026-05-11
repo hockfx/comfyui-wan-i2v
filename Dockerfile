@@ -17,11 +17,11 @@ RUN git clone --depth=1 https://github.com/kijai/ComfyUI-WanVideoWrapper.git \
     pip install -r /comfyui/custom_nodes/ComfyUI-WanVideoWrapper/requirements.txt --quiet
 
 # ── Modelos Wan 2.1 I2V ───────────────────────────────────────────────────────
-# Wan2.1 I2V 480p GGUF Q2_K — ~5GB (más liviano para arranque rápido)
+# Wan2.1 I2V 480p GGUF Q3_K_S — 7.93GB (más pequeño disponible)
 RUN comfy model download \
-    --url "https://huggingface.co/city96/Wan2.1-I2V-14B-480P-gguf/resolve/main/wan2.1-i2v-14b-480p-Q2_K.gguf" \
+    --url "https://huggingface.co/city96/Wan2.1-I2V-14B-480P-gguf/resolve/main/wan2.1-i2v-14b-480p-Q3_K_S.gguf" \
     --relative-path models/unet \
-    --filename wan2.1-i2v-14b-480p-Q2_K.gguf
+    --filename wan2.1-i2v-14b-480p-Q3_K_S.gguf
 
 # T5 text encoder — 1.2 GB
 RUN comfy model download \
