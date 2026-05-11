@@ -4,9 +4,6 @@
 # ─────────────────────────────────────────────────────────────────────────────
 FROM runpod/worker-comfyui:5.8.5-base
 
-# Actualizar ComfyUI a la versión más reciente
-# WanImageToVideo y VAEDecodeVideo son nodos nativos en versiones recientes
-
 # ── Custom nodes ──────────────────────────────────────────────────────────────
 # ComfyUI-GGUF — loader para modelos .gguf (UnetLoaderGGUF)
 RUN comfy node install comfyui-gguf
@@ -20,11 +17,11 @@ RUN git clone --depth=1 https://github.com/kijai/ComfyUI-WanVideoWrapper.git \
     pip install -r /comfyui/custom_nodes/ComfyUI-WanVideoWrapper/requirements.txt --quiet
 
 # ── Modelos Wan 2.1 I2V ───────────────────────────────────────────────────────
-# Wan2.1 I2V 480p GGUF Q4_K_S — 10.4 GB
+# Wan2.1 I2V 480p GGUF Q2_K — ~5GB (más liviano para arranque rápido)
 RUN comfy model download \
-    --url "https://huggingface.co/city96/Wan2.1-I2V-14B-480P-gguf/resolve/main/wan2.1-i2v-14b-480p-Q4_K_S.gguf" \
+    --url "https://huggingface.co/city96/Wan2.1-I2V-14B-480P-gguf/resolve/main/wan2.1-i2v-14b-480p-Q2_K.gguf" \
     --relative-path models/unet \
-    --filename wan2.1-i2v-14b-480p-Q4_K_S.gguf
+    --filename wan2.1-i2v-14b-480p-Q2_K.gguf
 
 # T5 text encoder — 1.2 GB
 RUN comfy model download \
