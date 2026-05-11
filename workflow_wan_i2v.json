@@ -1,11 +1,5 @@
 {
-  "1": {
-    "class_type": "UnetLoaderGGUF",
-    "inputs": {
-      "unet_name": "wan2.1-i2v-14b-480p-Q4_K_S.gguf"
-    },
-    "_meta": { "title": "Load Wan2.1 I2V GGUF" }
-  },
+  "1": {"class_type": "UnetLoaderGGUF", "inputs": {"unet_name": "wan2.1-i2v-14b-480p-Q3_K_S.gguf"}},
 
   "2": {
     "class_type": "LoadImage",
